@@ -1,6 +1,6 @@
 import React, {Component} from "react";
-const ChatBar = require("./ChatBar.jsx");
-const MessageList = require("./MessageList.jsx");
+import ChatBar from "./ChatBar.jsx";
+import MessageList from "./MessageList.jsx";
 
 class App extends Component {
   render() {

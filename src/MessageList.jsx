@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-const Message = require("./Message.jsx");
+import Message from "./Message.jsx";
 
 function MessageList(props) {
   return (
