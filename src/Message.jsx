@@ -1,11 +1,22 @@
 import React, {Component} from "react";
 
-function Message(props) {
+function MessageListItem({message}) {
   return (
-  <div className="message">
-    <span className="message-username">Anonymous1</span>
-    <span className="message-content">I won't be impressed with technology until I can download food.</span>
-  </div>
+    <div className="message">
+      <span className="message-username">{message.username}</span>
+      <span className="message-content">{message.content}</span>
+    </div>
   );
+}
+
+function Message({messages}) {
+  const messageItems = messages.map(message => (
+    <MessageListItem key={message.username} message={message} />
+  ));
+  return (
+    <div>
+      {messageItems}
+    </div>
+  )
 }
 module.exports = Message;

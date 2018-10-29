@@ -1,10 +1,10 @@
 import React, {Component} from "react";
 import Message from "./Message.jsx";
 
-function MessageList(props) {
+function MessageList({messages}) {
   return (
   <main className="messages">
-    <Message />
+    <Message messages={messages} />
   </main>
   );
 }
