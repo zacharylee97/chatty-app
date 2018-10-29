@@ -1,9 +1,14 @@
-import React, {Component} from 'react';
+import React, {Component} from "react";
+const ChatBar = require("./ChatBar.jsx");
+const MessageList = require("./MessageList.jsx");
 
 class App extends Component {
   render() {
     return (
-      <h1>Hello React :)</h1>
+      <div>
+        <MessageList />
+        <ChatBar />
+      </div>
     );
   }
 }
