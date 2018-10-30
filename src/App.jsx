@@ -21,16 +21,14 @@ class App extends Component {
       ],
     };
     this.addMessage = this.addMessage.bind(this);
+    this.socket = new WebSocket('ws://localhost:3001');
   }
 
   componentDidMount() {
     console.log("componentDidMount <App />");
-    setTimeout(() => {
-      console.log("Simulating incoming message");
-      const newMessage = {id: 3, username: "Michelle", content: "Hello there!"};
-      const messages = this.state.messages.concat(newMessage);
-      this.setState({messages: messages});
-    }, 3000);
+    this.socket.onopen = function() {
+      console.log("Connected to server")
+    }
   }
 
   addMessage(content) {
