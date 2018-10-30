@@ -1,17 +1,17 @@
 import React, {Component} from "react";
 
-function MessageListItem({message}) {
+function MessageListItem({user, content}) {
   return (
     <div className="message">
-      <span className="message-username">{message.username}</span>
-      <span className="message-content">{message.content}</span>
+      <span className="message-username">{user}</span>
+      <span className="message-content">{content}</span>
     </div>
   );
 }
 
 function Message({messages}) {
   const messageItems = messages.map(message => (
-    <MessageListItem key={message.username} message={message} />
+    <MessageListItem key={message.id} user={message.username} content={message.content} />
   ));
   return (
     <div>

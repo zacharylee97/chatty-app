@@ -6,16 +6,17 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
+      currentUser: {name: "Bob"}, //Optional
       messages: [
         {
-          type: "incomingMessage",
-          content: "I won't be impressed with technology until I can download food.",
-          username: "Anonymous1"
+          id: "01",
+          username: "Bob",
+          content: "Has anyone seen my marbles?",
         },
         {
-          type: "incomingMessage",
-          content: "I wouldn't want to download Kraft Dinner. I'd be scared of cheese packet loss.",
-          username: "Anonymous2"
+          id: "02",
+          username: "Anonymous",
+          content: "No, I think you lost them. You lost your marbles Bob. You lost them for good."
         },
       ]
     }
@@ -24,7 +25,7 @@ class App extends Component {
     return (
       <div>
         <MessageList messages={this.state.messages} />
-        <ChatBar />
+        <ChatBar user={this.state.currentUser} />
       </div>
     );
   }
