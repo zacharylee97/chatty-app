@@ -18,8 +18,9 @@ class App extends Component {
           username: "Anonymous",
           content: "No, I think you lost them. You lost your marbles Bob. You lost them for good."
         },
-      ]
-    }
+      ],
+    };
+    this.addMessage = this.addMessage.bind(this);
   }
 
   componentDidMount() {
@@ -32,11 +33,19 @@ class App extends Component {
     }, 3000);
   }
 
+  addMessage(content) {
+    const id = this.state.messages.length + 1;
+    const user = this.state.currentUser.name;
+    const newMessage = {id: id, username: user, content: content};
+    const messages = this.state.messages.concat(newMessage);
+    this.setState({messages: messages})
+  }
+
   render() {
     return (
       <div>
         <MessageList messages={this.state.messages} />
-        <ChatBar user={this.state.currentUser} />
+        <ChatBar user={this.state.currentUser} addMessage={this.addMessage} />
       </div>
     );
   }
