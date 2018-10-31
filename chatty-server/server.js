@@ -13,7 +13,6 @@ const server = express()
 
 // Create the WebSockets server
 const wss = new SocketServer({ server });
-const clients = {}
 
 //Create function to broadcast messages
 wss.broadcast = function broadcast(message) {

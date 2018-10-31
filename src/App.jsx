@@ -32,11 +32,17 @@ class App extends Component {
       currentName: this.state.currentUser.name,
       newName: name
     }
-    this.socket.send(JSON.stringify(message))
+    this.socket.send(JSON.stringify(message));
+    this.setState({currentUser: {name: name}})
   }
 
   addMessage(newMessage) {
     const messages = this.state.messages.concat(newMessage);
+    this.setState({messages: messages});
+  }
+
+  addNotification(newNotification) {
+    const messages = this.state.messages.concat(newNotification);
     this.setState({messages: messages});
   }
 
@@ -57,7 +63,7 @@ class App extends Component {
           this.addMessage(message);
           break;
         case "incomingNotification":
-          this.addMessage(message);
+          this.addNotification(message);
           break;
         case "numberOfClients":
           this.displayClients(message.numOfClients);
