@@ -31,14 +31,30 @@ wss.on('connection', function connection(ws) {
   //Broadcast message to all connected clients
   ws.on('message', function incoming(data) {
     const messageInfo = JSON.parse(data);
-    console.log(`User ${messageInfo.username} said ${messageInfo.content}`);
-    const message = {
-      id: uuidv4(),
-      type: messageInfo.type,
-      username: messageInfo.username,
-      content: messageInfo.content
+    switch(messageInfo.type) {
+      case "postMessage":
+        console.log(`User ${messageInfo.username} said ${messageInfo.content}`);
+        const message = {
+          id: uuidv4(),
+          type: "incomingMessage",
+          username: messageInfo.username,
+          content: messageInfo.content
+        }
+        wss.broadcast(JSON.stringify(message));
+        break;
+      case "postNotification":
+        const content = `${messageInfo.currentName} changed their name to ${messageInfo.newName}`;
+        console.log(content);
+        const notification = {
+          id: uuidv4(),
+          type: "incomingNotification",
+          content: content
+        }
+        wss.broadcast(JSON.stringify(notification));
+        break;
+      default:
+        throw new Error("Unknown event type " + data.type);
     }
-    wss.broadcast(JSON.stringify(message));
   });
 
 

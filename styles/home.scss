@@ -87,3 +87,13 @@ body {
   text-decoration: none;
 }
 
+.notification {
+  display: flex;
+  padding: 5px;
+}
+
+.notification-content {
+  overflow: hidden;
+  margin: 5px;
+  padding: 0 10px;
+}
