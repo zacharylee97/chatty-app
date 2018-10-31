@@ -24,11 +24,11 @@ wss.broadcast = function broadcast(message) {
 
 //Create function to broadcast number of clients
 wss.broadcastClients = () => {
-  const clients = {
+  const numOfClients = {
     type: "numberOfClients",
     numOfClients: wss.clients.size
   }
-  wss.broadcast(JSON.stringify(clients));
+  wss.broadcast(JSON.stringify(numOfClients));
 }
 
 //Create function to randomly generate a hexcode for user color
@@ -45,7 +45,6 @@ const addClient = (ws, username = 'Anonymous') => {
   const clientId = uuidv4();
   ws.clientId = clientId;
   clients[clientId] = { ws, username, color: generateColor() };
-  console.log(clients);
 };
 
 const updateClient = (ws, username) => {
@@ -54,7 +53,6 @@ const updateClient = (ws, username) => {
 
 const removeClient = (ws) => {
   delete clients[ws.clientId];
-  console.log(clients);
 }
 
 const sendClientColor = ws => {
