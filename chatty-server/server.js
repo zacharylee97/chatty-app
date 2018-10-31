@@ -28,6 +28,13 @@ wss.broadcast = function broadcast(message) {
 wss.on('connection', function connection(ws) {
   console.log('Client connected');
 
+  //Broadcast number of clients
+  const clients = {
+    type: "numberOfClients",
+    numOfClients: wss.clients.size
+  }
+  wss.broadcast(JSON.stringify(clients));
+
   //Broadcast message to all connected clients
   ws.on('message', function incoming(data) {
     const messageInfo = JSON.parse(data);
@@ -59,6 +66,14 @@ wss.on('connection', function connection(ws) {
 
 
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
-  ws.on('close', () => console.log('Client disconnected'));
+  ws.on('close', () => {
+    //Broadcast number of clients
+    const clients = {
+      type: "numberOfClients",
+      numOfClients: wss.clients.size
+    }
+    wss.broadcast(JSON.stringify(clients));
+    console.log('Client disconnected');
+  });
 });
 

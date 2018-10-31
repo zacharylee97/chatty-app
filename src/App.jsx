@@ -1,6 +1,8 @@
 import React, {Component} from "react";
 import ChatBar from "./ChatBar.jsx";
 import MessageList from "./MessageList.jsx";
+import NavBar from "./NavBar.jsx";
+
 
 class App extends Component {
   constructor(props) {
@@ -8,6 +10,7 @@ class App extends Component {
     this.state = {
       currentUser: {name: "Anonymous"},
       messages: [],
+      users: 0
     };
     this.newMessage = this.newMessage.bind(this);
     this.newUsername = this.newUsername.bind(this);
@@ -37,11 +40,9 @@ class App extends Component {
     this.setState({messages: messages});
   }
 
-   addNotification(newMessage) {
-    const messages = this.state.messages.concat(newMessage);
-    this.setState({messages: messages});
+  displayClients(clients) {
+    this.setState({users: clients});
   }
-
 
   componentDidMount() {
     console.log("componentDidMount <App />");
@@ -56,7 +57,10 @@ class App extends Component {
           this.addMessage(message);
           break;
         case "incomingNotification":
-          this.addNotification(message);
+          this.addMessage(message);
+          break;
+        case "numberOfClients":
+          this.displayClients(message.numOfClients);
           break;
         default:
           throw new Error("Unknown event type " + data.type);
@@ -67,6 +71,7 @@ class App extends Component {
   render() {
     return (
       <div>
+        <NavBar users={this.state.users} />
         <MessageList messages={this.state.messages} />
         <ChatBar user={this.state.currentUser} newMessage={this.newMessage} newUsername={this.newUsername} />
       </div>
