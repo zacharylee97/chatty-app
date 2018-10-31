@@ -13,8 +13,12 @@ function Message({user, content, color}) {
     return (
       <div className="message">
         <span className="message-username" style={{color: color}}>{user}</span>
-        <img className="message-image" src={imgURL[0]} />
-        <span className="message-content">{newContent}</span>
+        <span className="message-content">
+          {newContent}
+          <br />
+          <img className="message-image" src={imgURL[0]} />
+        </span>
+
       </div>
       )
   } else {
