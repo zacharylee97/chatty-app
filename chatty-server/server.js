@@ -45,10 +45,16 @@ const addClient = (ws, username = 'Anonymous') => {
   const clientId = uuidv4();
   ws.clientId = clientId;
   clients[clientId] = { ws, username, color: generateColor() };
+  console.log(clients);
 };
 
 const updateClient = (ws, username) => {
   clients[ws.clientId].username = username;
+}
+
+const removeClient = (ws) => {
+  delete clients[ws.clientId];
+  console.log(clients);
 }
 
 const sendClientColor = ws => {
@@ -107,6 +113,7 @@ wss.on('connection', function connection(ws) {
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
   ws.on('close', () => {
     wss.broadcastClients();
+    removeClient(ws);
     console.log('Client disconnected');
   });
 });
