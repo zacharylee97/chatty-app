@@ -1,11 +1,11 @@
 import React, {Component} from "react";
 
-function ChatBar({user, addMessage}) {
+function ChatBar({user, newMessage}) {
 
   const onSubmit = (event) => {
     event.preventDefault();
     const content = event.target.elements.content;
-    addMessage(content.value)
+    newMessage(content.value)
     content.value = "";
     }
 
