@@ -21,6 +21,23 @@ wss.broadcast = function broadcast(message) {
   });
 };
 
+wss.broadcastClients = function() {
+  const clients = {
+    type: "numberOfClients",
+    numOfClients: wss.clients.size
+  }
+  wss.broadcast(JSON.stringify(clients));
+}
+
+const generateColor = () => {
+  const hex = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f'];
+  let color = [0, 0, 0, 0, 0, 0, 0];
+
+  color = color.map(hexCode => hex[Math.floor(Math.random() * 16)]);
+  color[0] = '#';
+  return color.join('');
+};
+
 // Set up a callback that will run when a client connects to the server
 // When a client connects they are assigned a socket, represented by
 // the ws parameter in the callback.
@@ -28,11 +45,7 @@ wss.on('connection', function connection(ws) {
   console.log('Client connected');
 
   //Broadcast number of clients
-  const clients = {
-    type: "numberOfClients",
-    numOfClients: wss.clients.size
-  }
-  wss.broadcast(JSON.stringify(clients));
+  wss.broadcastClients();
 
   //Broadcast message to all connected clients
   ws.on('message', function incoming(data) {
@@ -67,11 +80,7 @@ wss.on('connection', function connection(ws) {
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
   ws.on('close', () => {
     //Broadcast number of clients
-    const clients = {
-      type: "numberOfClients",
-      numOfClients: wss.clients.size
-    }
-    wss.broadcast(JSON.stringify(clients));
+    wss.broadcastClients();
     console.log('Client disconnected');
   });
 });
