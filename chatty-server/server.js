@@ -39,13 +39,13 @@ const generateColor = () => {
   color = color.map(hexCode => hex[Math.floor(Math.random() * 16)]);
   color[0] = '#';
   return color.join('');
-};
+}
 
 const addClient = (ws, username = 'Anonymous') => {
   const clientId = uuidv4();
   ws.clientId = clientId;
   clients[clientId] = { ws, username, color: generateColor() };
-};
+}
 
 const updateClient = (ws, username) => {
   clients[ws.clientId].username = username;
@@ -61,7 +61,7 @@ const sendClientColor = ws => {
     type: "incomingUserNotification",
     userId: ws.clientId,
     color
-  };
+  }
   ws.send(JSON.stringify(message));
 }
 

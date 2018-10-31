@@ -48,9 +48,7 @@ class App extends Component {
     this.setState({users: clients});
   }
   updateUserInfo({userId, color}) {
-    this.setState({
-      currentUser: { id: userId, name: this.state.currentUser.name, color: color }
-    });
+    this.setState({currentUser: {id: userId, name: this.state.currentUser.name, color: color}});
   }
   componentDidMount() {
     console.log("componentDidMount <App />");
