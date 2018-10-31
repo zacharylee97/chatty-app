@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 
-function ChatBar({user, newMessage}) {
+function ChatBar({user, newMessage, changeUsername}) {
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -12,7 +12,7 @@ function ChatBar({user, newMessage}) {
   return (
     <footer className="chatbar">
       <form className="chatbar" onSubmit={onSubmit}>
-        <input type="text" name="user" className="chatbar-username" placeholder="Your Name (Optional)" defaultValue={user.name}/>
+        <input type="text" className="chatbar-username" placeholder="Your Name (Optional)" onChange={changeUsername} />
         <input type="text" name="content" className="chatbar-message" placeholder="Type a message and hit ENTER" />
         <button type="submit" style={{display: "None"}}></button>
       </form>
