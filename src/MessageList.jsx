@@ -3,11 +3,11 @@ import Message from "./Message.jsx";
 import Notification from "./Notification.jsx"
 
 function MessageList({messages}) {
-  const messageItems = messages.map(message => {
-    if (message.type === "incomingMessage") {
-      return <Message key={message.id} user={message.username} content={message.content} />
-    } else if (message.type === "incomingNotification") {
-      return <Notification key={message.id} content={message.content} />
+  const messageItems = messages.map(({type, id, username, content, color}) => {
+    if (type === "incomingMessage") {
+      return <Message key={id} user={username} content={content} color={color} />
+    } else if (type === "incomingNotification") {
+      return <Notification key={id} content={content} />
     }
   });
   return (

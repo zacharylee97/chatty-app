@@ -5,6 +5,6 @@ function Notification({content}) {
     <div className="notification">
       <span className="notification-content">{content}</span>
     </div>
-  )
+  );
 }
 module.exports = Notification;

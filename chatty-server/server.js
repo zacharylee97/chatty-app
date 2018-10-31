@@ -13,6 +13,7 @@ const server = express()
 
 // Create the WebSockets server
 const wss = new SocketServer({ server });
+const clients = {};
 
 //Create function to broadcast messages
 wss.broadcast = function broadcast(message) {
@@ -21,7 +22,8 @@ wss.broadcast = function broadcast(message) {
   });
 };
 
-wss.broadcastClients = function() {
+//Create function to broadcast number of clients
+wss.broadcastClients = () => {
   const clients = {
     type: "numberOfClients",
     numOfClients: wss.clients.size
@@ -29,6 +31,7 @@ wss.broadcastClients = function() {
   wss.broadcast(JSON.stringify(clients));
 }
 
+//Create function to randomly generate a hexcode for user color
 const generateColor = () => {
   const hex = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f'];
   let color = [0, 0, 0, 0, 0, 0, 0];
@@ -38,12 +41,33 @@ const generateColor = () => {
   return color.join('');
 };
 
+const addClient = (ws, username = 'Anonymous') => {
+  const clientId = uuidv4();
+  ws.clientId = clientId;
+  clients[clientId] = { ws, username, color: generateColor() };
+};
+
+const updateClient = (ws, username) => {
+  clients[ws.clientId].username = username;
+}
+
+const sendClientColor = ws => {
+  const {color} = clients[ws.clientId];
+  const message = {
+    type: "incomingUserNotification",
+    userId: ws.clientId,
+    color
+  };
+  ws.send(JSON.stringify(message));
+}
+
 // Set up a callback that will run when a client connects to the server
-// When a client connects they are assigned a socket, represented by
+// when a client connects they are assigned a socket, represented by
 // the ws parameter in the callback.
 wss.on('connection', function connection(ws) {
   console.log('Client connected');
-
+  addClient(ws);
+  console.log(clients);
   //Broadcast number of clients
   wss.broadcastClients();
 
@@ -57,6 +81,7 @@ wss.on('connection', function connection(ws) {
           id: uuidv4(),
           type: "incomingMessage",
           username: messageInfo.username,
+          color: messageInfo.color,
           content: messageInfo.content
         }
         wss.broadcast(JSON.stringify(message));
@@ -67,8 +92,11 @@ wss.on('connection', function connection(ws) {
         const notification = {
           id: uuidv4(),
           type: "incomingNotification",
-          content: content
+          username: messageInfo.newName,
+          content
         }
+        updateClient(ws, messageInfo.newName);
+        sendClientColor(ws);
         wss.broadcast(JSON.stringify(notification));
         break;
       default:
@@ -76,10 +104,8 @@ wss.on('connection', function connection(ws) {
     }
   });
 
-
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
   ws.on('close', () => {
-    //Broadcast number of clients
     wss.broadcastClients();
     console.log('Client disconnected');
   });
