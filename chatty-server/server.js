@@ -55,12 +55,19 @@ const removeClient = (ws) => {
   delete clients[ws.clientId];
 }
 
-const sendClientColor = ws => {
-  const {color} = clients[ws.clientId];
+const sendClientInfo = ws => {
+  const clientInfo = clients[ws.clientId];
+  let color;
+  if (clientInfo.username === "Anonymous") {
+    color = "Black";
+  } else {
+    color = clientInfo.color;
+  }
   const message = {
     type: "incomingUserNotification",
-    userId: ws.clientId,
-    color
+    id: ws.clientId,
+    username: clientInfo.username,
+    color: color
   }
   ws.send(JSON.stringify(message));
 }
@@ -100,7 +107,7 @@ wss.on('connection', function connection(ws) {
           content
         }
         updateClient(ws, messageInfo.newName);
-        sendClientColor(ws);
+        sendClientInfo(ws);
         wss.broadcast(JSON.stringify(notification));
         break;
       default:

@@ -2,14 +2,20 @@ import React, {Component} from "react";
 
 function ChatBar({newMessage, newUsername}) {
   const submitMessage = (event) => {
-    if (event.key === 'Enter') {
-      newMessage(event.target.value);
-      event.target.value = "";
+    if (event.key === "Enter") {
+      if (event.target.value !== "") {
+        newMessage(event.target.value);
+        event.target.value = "";
+      }
     }
   }
   const submitName = (event) => {
-    if (event.key === 'Enter') {
-      newUsername(event.target.value);
+    if (event.key === "Enter") {
+      if (event.target.value !== "") {
+        newUsername(event.target.value);
+      } else {
+        newUsername("Anonymous")
+      }
     }
   }
   return (

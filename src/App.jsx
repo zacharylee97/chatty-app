@@ -32,7 +32,6 @@ class App extends Component {
       newName: name
     }
     this.socket.send(JSON.stringify(message));
-    this.setState({currentUser: {name: name}})
   }
   addMessage(newMessage) {
     const messages = this.state.messages.concat(newMessage);
@@ -47,8 +46,8 @@ class App extends Component {
   displayClients(clients) {
     this.setState({users: clients});
   }
-  updateUserInfo({userId, color}) {
-    this.setState({currentUser: {id: userId, name: this.state.currentUser.name, color: color}});
+  updateUserInfo({id, username, color}) {
+    this.setState({currentUser: {id: id, name: username, color: color}});
   }
   componentDidMount() {
     console.log("componentDidMount <App />");
