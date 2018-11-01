@@ -1,6 +1,6 @@
 # Chatty App
 
-Chatty App is a client-side single-page app that allows users to send and receive messages in real-time. Messages can include text or an image URL, which will be dispayed in the chat log. Users can change their username, which will assign a random colour to their username. A notification will be sent to all users when a user changes their username. The number of users is displayed in the navbar at the top.
+Chatty App is a single-page app built with ReactJS that allows users to send and receive messages in real-time. Messages can include text or an image URL, which will be dispayed in the chat log. Users can also change their username, which will assign a random colour to their username. A notification will be sent to all users when a user changes their username. The number of users is displayed in the navbar at the top.
 
 ## Final Product
 
