@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React from "react";
 
 function includesImgURL(entry){
   const ImgURLRegularExpression =  /([a-z\-_0-9\/\:\.]*\.(jpg|jpeg|png|gif))/i;
