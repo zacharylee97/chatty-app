@@ -36,7 +36,7 @@ const generateColor = () => {
   const hex = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f'];
   let color = [0, 0, 0, 0, 0, 0, 0];
 
-  color = color.map(hexCode => hex[Math.floor(Math.random() * 16)]);
+  color = color.map(() => hex[Math.floor(Math.random() * 16)]);
   color[0] = '#';
   return color.join('');
 }
@@ -86,7 +86,6 @@ wss.on('connection', function connection(ws) {
     const messageInfo = JSON.parse(data);
     switch(messageInfo.type) {
       case "postMessage":
-        console.log(`User ${messageInfo.username} said ${messageInfo.content}`);
         const message = {
           id: uuidv4(),
           type: "incomingMessage",
