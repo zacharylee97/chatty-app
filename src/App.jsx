@@ -38,8 +38,6 @@ class App extends Component {
     this.setState({messages: messages});
   }
   addNotification(newNotification) {
-    const name = newNotification.username;
-    const color = newNotification.color;
     const messages = this.state.messages.concat(newNotification);
     this.setState({messages: messages});
   }
@@ -50,7 +48,6 @@ class App extends Component {
     this.setState({currentUser: {id: id, name: username, color: color}});
   }
   componentDidMount() {
-    console.log("componentDidMount <App />");
     this.socket = new WebSocket('ws://localhost:3001');
     this.socket.onopen = () => {
       console.log("Connected to server");

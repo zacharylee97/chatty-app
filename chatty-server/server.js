@@ -78,7 +78,6 @@ const sendClientInfo = ws => {
 wss.on('connection', function connection(ws) {
   console.log('Client connected');
   addClient(ws);
-  console.log(clients);
   //Broadcast number of clients
   wss.broadcastClients();
 
@@ -99,7 +98,6 @@ wss.on('connection', function connection(ws) {
         break;
       case "postNotification":
         const content = `${messageInfo.currentName} changed their name to ${messageInfo.newName}`;
-        console.log(content);
         const notification = {
           id: uuidv4(),
           type: "incomingNotification",
